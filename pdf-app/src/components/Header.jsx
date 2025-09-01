@@ -4,7 +4,7 @@ import "./PageHeader.css";
 const pageHeader = (
   <div className="page-header">
    <a href="https://GadgetHub.cse23.org"> <img
-      src="/logo-header.png"
+      src="./logo-header.png"
       alt="GadgetHub Logo"
       className="header-logo"
     />
