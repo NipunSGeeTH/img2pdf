@@ -48,9 +48,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-
-
-This new file adds a few key steps. First, it uploads your `build` directory as an artifact. Then, it uses the `deploy-pages` action in a separate job to take that artifact and publish it to GitHub Pages.
-
-To make this work, you'll also need to enable GitHub Pages in your repository settings under the "Pages" section and set the source to "GitHub Actions".
