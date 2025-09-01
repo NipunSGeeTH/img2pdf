@@ -26,7 +26,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd pdf-app
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: |
+        cd pdf-app
+        npm ci
+        npm run build --if-present
+        npm test
+
+  
