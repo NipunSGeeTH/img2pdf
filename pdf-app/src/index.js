@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'font-awesome/css/font-awesome.min.css';
 import pageHeader from './components/Header';
-   
+import pageFooter from './components/Footer';
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if using TypeScript
@@ -13,6 +13,7 @@ root.render(
   <React.StrictMode>
      {pageHeader}
     <App />
+    {pageFooter}
   </React.StrictMode>
 );
 
