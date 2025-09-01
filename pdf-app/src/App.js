@@ -63,20 +63,20 @@ class App extends React.Component {
       pageWrapper.boxShadow = "5px 5px 5px rgb(200,200,200)";
     }
 
-const landing = (
-  <div className="landing-page">
-    <div style={{ padding: "40px", fontSize: "18px", textAlign: "center" }}>
-      Convert JPEG or PNG to PDF — <strong>Safe, Secure, Local.</strong>  
-      <br />
-      Your files never leave your device.
-    </div>
-    <button 
-      onClick={() => this.fileInput.current.click()} 
-      className="big-btn"
-      style={{ marginTop: "20px", padding: "15px 30px", fontSize: "18px", cursor: "pointer" }}
-    >
-      Select Images
-    </button>
+    const landing = (
+      <div className="landing-page">
+        <div style={{ padding: "40px", fontSize: "18px", textAlign: "center" }}>
+          Convert JPEG or PNG to PDF — <strong>Safe, Secure, Local.</strong>
+          <br />
+          Your files never leave your device.
+        </div>
+        <button
+          onClick={() => this.fileInput.current.click()}
+          className="big-btn"
+          style={{ marginTop: "20px", padding: "15px 30px", fontSize: "18px", cursor: "pointer" }}
+        >
+          Select Images
+        </button>
 
 
 
@@ -95,60 +95,60 @@ const landing = (
 
 
 
-<div
-  className="dropzone"
-  style={{
-    margin: "25px auto",
-    padding: "60px 20px",
-    width: "80%",
-    maxWidth: "600px",
-    border: "3px dashed #888",
-    borderRadius: "12px",
-    backgroundColor: "#f9f9f9",
-    color: "#555",
-    fontSize: "20px",
-    fontWeight: "500",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "column",
-    transition: "0.3s",
-    cursor: "pointer",
-    textAlign: "center"
-  }}
-  onDragOver={(e) => {
-    e.preventDefault(); // allow drop
-    e.currentTarget.style.backgroundColor = "#e0f7ff";
-    e.currentTarget.style.borderColor = "#00aaff";
-  }}
-  onDragLeave={(e) => {
-    e.currentTarget.style.backgroundColor = "#f9f9f9";
-    e.currentTarget.style.borderColor = "#888";
-  }}
-  onDrop={(e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    let files = e.dataTransfer.files;
-    this.readfiles(files); // your class method
-    e.currentTarget.style.backgroundColor = "#f9f9f9";
-    e.currentTarget.style.borderColor = "#888";
-  }}
-  onClick={() => this.fileInput.current.click()} // click to open file selector
->
-  <div>Drag & Drop Images Here</div>
-  <small style={{ marginTop: "10px", fontSize: "14px", color: "#999" }}>
-    or click to select files
-  </small>
-</div>
-<input
-  type="file"
-  multiple
-  ref={this.fileInput}
-  style={{ display: "none" }}
-  onChange={(e) => this.readfiles(e.target.files)}
-/>
+        <div
+          className="dropzone"
+          style={{
+            margin: "25px auto",
+            padding: "60px 20px",
+            width: "80%",
+            maxWidth: "600px",
+            border: "3px dashed #888",
+            borderRadius: "12px",
+            backgroundColor: "#f9f9f9",
+            color: "#555",
+            fontSize: "20px",
+            fontWeight: "500",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+            transition: "0.3s",
+            cursor: "pointer",
+            textAlign: "center"
+          }}
+          onDragOver={(e) => {
+            e.preventDefault(); // allow drop
+            e.currentTarget.style.backgroundColor = "#e0f7ff";
+            e.currentTarget.style.borderColor = "#00aaff";
+          }}
+          onDragLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "#f9f9f9";
+            e.currentTarget.style.borderColor = "#888";
+          }}
+          onDrop={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            let files = e.dataTransfer.files;
+            this.readfiles(files); // your class method
+            e.currentTarget.style.backgroundColor = "#f9f9f9";
+            e.currentTarget.style.borderColor = "#888";
+          }}
+          onClick={() => this.fileInput.current.click()} // click to open file selector
+        >
+          <div>Drag & Drop Images Here</div>
+          <small style={{ marginTop: "10px", fontSize: "14px", color: "#999" }}>
+            or click to select files
+          </small>
+        </div>
+        <input
+          type="file"
+          multiple
+          ref={this.fileInput}
+          style={{ display: "none" }}
+          onChange={(e) => this.readfiles(e.target.files)}
+        />
 
-    </div>
+      </div>
 
 
     );
@@ -345,19 +345,23 @@ const landing = (
         {this.state.compressImages ? imageQualitySelector : (<div></div>)}
       </div>
     );
-    const actions = (<div style={{ display: "flex", justifyContent: "space-between", padding: "10px", borderTop: "1px solid rgb(200,200,200)" }}>
-      <div style={{ display: "flex" }} >
-        <div style={{ paddingLeft: "5px", paddingRight: "5px" }}>
+
+
+    const actions = (
+      <div className="actions-wrapper">
+       
+
           <button onClick={() => {
             this.setState({
               forceShowOption: true
             });
           }} className="option-btn button">PDF Options</button>
-        </div>
+       
         <button onClick={() => this.fileInput.current.click()} className="button">Add page</button>
+
+        <button onClick={this.createPdf} className="button">Generate PDF</button>
       </div>
-      <button onClick={this.createPdf} className="button">Generate PDF</button>
-    </div>);
+    );
 
 
     if (this.state.images.length < 1) {

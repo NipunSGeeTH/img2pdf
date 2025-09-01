@@ -1,6 +1,6 @@
 .App {
-  text-align: center;
-  height: 500px;
+  
+
 
 
 }
@@ -32,8 +32,26 @@
 }
 
 
+.actions-bar {
+  display: block;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid rgb(200,200,200);
+  margin-bottom: 60px; /* push it above the footer */
+  background: white; /* optional to cover content behind */
+  z-index: 10; /* optional if you want it above content */
+}
 
 
+.actions-wrapper {
+  display: flex;
+  justify-content: space-between; /* keeps buttons spaced out */
+  padding: 10px;
+  border-top: 1px solid rgb(200,200,200);
+  background: white; /* optional: prevents overlap with content */
+  z-index: 10;
+  margin-bottom: 0px; /* space above footer, adjust to footer height */
+}
 
 
 

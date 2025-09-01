@@ -2,16 +2,19 @@
   display: flex;
   justify-content: space-between; /* pushes logo left, text right */
   align-items: center;
-  padding: 20px 40px; /* horizontal padding */
+  padding: 10px 10px 5px 5px; /* horizontal padding */
   background-color: #f5f5f5; /* optional */
 }
 
 .header-logo {
-  height: 48px; /* adjust as needed */
+  margin-top: 15px;
   width: auto;
+  height: clamp(33px, 6vw, 48px); /* scales between 36px and 48px depending on viewport width */
 }
 
+
 .header-text {
-  font-size: 24px;
   font-weight: bold;
+  font-size: clamp(12px, 3vw, 20px);
 }
+
