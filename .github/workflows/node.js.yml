@@ -2,47 +2,33 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ main ]
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
+    
+    defaults:
+      run:
+        working-directory: ./pdf-app
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+    
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: './pdf-app/package-lock.json'
 
-      # Step 2: Setup Node.js
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
+    - name: Install dependencies
+      run: npm ci
 
-      # Step 3: Install dependencies (inside pdf-app)
-      - name: Install dependencies
-        working-directory: pdf-app
-        run: npm install
-
-      # Step 4: Run tests (optional, only if you have tests)
-      - name: Run tests
-        working-directory: pdf-app
-        run: npm test -- --watchAll=false
-
-      # Step 5: Build the React app
-      - name: Build app
-        working-directory: pdf-app
-        run: npm run build
-
-      # Step 6: Optionally upload build artifacts
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: pdf-app-build
-          path: pdf-app/build
+    - name: Run tests
+      run: npm test
+      
+    - name: Build application
+      run: npm run build
