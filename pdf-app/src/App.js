@@ -410,22 +410,7 @@ class App extends React.Component {
     });
   }
 
-  // scaleImage = async (pageWidth, pageHeight, pageMargin, dataURL) => {
-  //   let img = await this.loadImage(dataURL);
 
-  //   let scaleFactor = Math.min((pageWidth - pageMargin) / img.width, (pageHeight - pageMargin) / img.height);
-  //   let w = img.width * scaleFactor;
-  //   let h = img.height * scaleFactor;
-
-  //   let canvas = document.createElement('canvas');
-  //   let ctx = canvas.getContext('2d');
-  //   canvas.width = w;
-  //   canvas.height = h;
-  //   ctx.drawImage(img, 0, 0, w, h);
-  //   let blob = await this.canvasToBlob(canvas);
-  //   console.log(blob);
-  //   return await blob.arrayBuffer();
-  // }
 
   fetchImage = async (dataURL, quality) => {
     if (!quality) {
