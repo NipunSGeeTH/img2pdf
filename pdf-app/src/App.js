@@ -146,20 +146,20 @@ class App extends React.Component {
         <div style={{
           flex: "1", height: "50px", display: "flex", flexDirection: "column",
           justifyContent: "center", textAlign: "center",
-          background: (this.state.pageMargin == None ? "purple" : "rgb(240,240,240)"),
-          color: (this.state.pageMargin == None ? "white" : "black"), padding: "5px"
+          background: (this.state.pageMargin === None ? "purple" : "rgb(240,240,240)"),
+          color: (this.state.pageMargin ===None ? "white" : "black"), padding: "5px"
         }} onClick={() => this.setState({ pageMargin: None })}>None</div>
         <div style={{
           flex: "1", height: "50px", display: "flex", flexDirection: "column",
           justifyContent: "center", textAlign: "center",
-          background: (this.state.pageMargin == Small ? "purple" : "rgb(240,240,240)"),
-          color: (this.state.pageMargin == Small ? "white" : "black"), padding: "5px"
+          background: (this.state.pageMargin === Small ? "purple" : "rgb(240,240,240)"),
+          color: (this.state.pageMargin === Small ? "white" : "black"), padding: "5px"
         }} onClick={() => this.setState({ pageMargin: Small })}>Small</div>
         <div style={{
           flex: "1", height: "50px", display: "flex", flexDirection: "column",
           justifyContent: "center", textAlign: "center",
-          background: (this.state.pageMargin == Big ? "purple" : "rgb(240,240,240)"),
-          color: (this.state.pageMargin == Big ? "white" : "black"), padding: "5px"
+          background: (this.state.pageMargin === Big ? "purple" : "rgb(240,240,240)"),
+          color: (this.state.pageMargin === Big ? "white" : "black"), padding: "5px"
         }} onClick={() => this.setState({ pageMargin: Big })}>Big</div>
       </div>
     </div>);
@@ -209,15 +209,15 @@ class App extends React.Component {
           <div style={{
             flex: "1", height: "50px", display: "flex", flexDirection: "column",
             justifyContent: "center", textAlign: "center",
-            background: (this.state.pageOrientation == Portrait ? "purple" : "rgb(240,240,240)"),
-            color: (this.state.pageOrientation == Portrait ? "white" : "black"), padding: "5px"
+            background: (this.state.pageOrientation === Portrait ? "purple" : "rgb(240,240,240)"),
+            color: (this.state.pageOrientation === Portrait ? "white" : "black"), padding: "5px"
           }}
             onClick={() => this.setState({ pageOrientation: Portrait })}>Portrait</div>
           <div style={{
             flex: "1", height: "50px", display: "flex", flexDirection: "column",
             justifyContent: "center", textAlign: "center",
-            background: (this.state.pageOrientation == Landscape ? "purple" : "rgb(240,240,240)"),
-            color: (this.state.pageOrientation == Landscape ? "white" : "black"), padding: "5px"
+            background: (this.state.pageOrientation === Landscape ? "purple" : "rgb(240,240,240)"),
+            color: (this.state.pageOrientation === Landscape ? "white" : "black"), padding: "5px"
           }}
             onClick={() => this.setState({ pageOrientation: Landscape })}>Landscape</div>
         </div>
@@ -226,20 +226,20 @@ class App extends React.Component {
           <div style={{
             flex: "1", height: "50px", display: "flex", flexDirection: "column",
             justifyContent: "center", textAlign: "center",
-            background: (this.state.pageSize == A4 ? "purple" : "rgb(240,240,240)"),
-            color: (this.state.pageSize == A4 ? "white" : "black"), padding: "5px"
+            background: (this.state.pageSize === A4 ? "purple" : "rgb(240,240,240)"),
+            color: (this.state.pageSize === A4 ? "white" : "black"), padding: "5px"
           }} onClick={() => this.setState({ pageSize: A4 })}>A4</div>
           <div style={{
             flex: "1", height: "50px", display: "flex", flexDirection: "column",
             justifyContent: "center", textAlign: "center",
-            background: (this.state.pageSize == Letter ? "purple" : "rgb(240,240,240)"),
-            color: (this.state.pageSize == Letter ? "white" : "black"), padding: "5px"
+            background: (this.state.pageSize === Letter ? "purple" : "rgb(240,240,240)"),
+            color: (this.state.pageSize === Letter ? "white" : "black"), padding: "5px"
           }} onClick={() => this.setState({ pageSize: Letter })}>US Letter</div>
           <div style={{
             flex: "1", height: "50px", display: "flex", flexDirection: "column",
             justifyContent: "center", textAlign: "center",
-            background: (this.state.pageSize == Fit ? "purple" : "rgb(240,240,240)"),
-            color: (this.state.pageSize == Fit ? "white" : "black"), padding: "5px"
+            background: (this.state.pageSize === Fit ? "purple" : "rgb(240,240,240)"),
+            color: (this.state.pageSize === Fit ? "white" : "black"), padding: "5px"
           }} onClick={() => this.setState({ pageSize: Fit })}>Same as Image</div>
         </div>
         {this.state.pageSize !== Fit ? pageMarginSection : (<div></div>)}
@@ -490,11 +490,15 @@ class App extends React.Component {
           pageSize = [img.width, img.height];
         } else {
           switch (jpegOrientation) {
-            case 6:
-            case 8:
-              pageSize = [pageSize[1], pageSize[0]];
-              break;
-          }
+  case 6:
+  case 8:
+    pageSize = [pageSize[1], pageSize[0]];
+    break;
+  default:
+    // do nothing for other orientations
+    break;
+}
+
         }
         const page = pdfDoc.addPage(pageSize);
         if (this.state.pageSize === Fit) {
@@ -507,8 +511,8 @@ class App extends React.Component {
         } else {
           //page.setSize(pageSize[0], pageSize[1]);
           let scaleFactor = Math.min((page.getWidth() - this.state.pageMargin) / img.width, (page.getHeight() - this.state.pageMargin) / img.height);
-          let w = img.width * scaleFactor;
-          let h = img.height * scaleFactor;
+          //let w = img.width * scaleFactor;
+          //let h = img.height * scaleFactor;
 
           //page.setSize(img.width,img.height);
           console.log(img.width + " " + img.height);
@@ -523,18 +527,21 @@ class App extends React.Component {
             height: dim.height,
           });
         }
+switch (jpegOrientation) {
+  case 6:
+    page.setRotation(degrees(90));
+    break;
+  case 3:
+    page.setRotation(degrees(180));
+    break;
+  case 8:
+    page.setRotation(degrees(270));
+    break;
+  default:
+    // do nothing for other orientations
+    break;
+}
 
-        switch (jpegOrientation) {
-          case 6:
-            page.setRotation(degrees(90));
-            break;
-          case 3:
-            page.setRotation(degrees(180));
-            break;
-          case 8:
-            page.setRotation(degrees(270));
-            break;
-        }
       }
       const pdfBytes = await pdfDoc.save();
       let blob = new Blob([pdfBytes], { type: "application/pdf" });
@@ -686,8 +693,9 @@ class App extends React.Component {
 
   uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
+     let r = Math.floor(Math.random() * 16);
+      let v = c === 'x' ? r : ((r & 0x3) | 0x8);
+        return v.toString(16);
     });
   }
 
