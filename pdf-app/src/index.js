@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'font-awesome/css/font-awesome.min.css';
+import pageHeader from './components/Header';
+   
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if using TypeScript
 root.render(
   <React.StrictMode>
+     {pageHeader}
     <App />
   </React.StrictMode>
 );

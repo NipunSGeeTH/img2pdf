@@ -63,33 +63,115 @@ class App extends React.Component {
       pageWrapper.boxShadow = "5px 5px 5px rgb(200,200,200)";
     }
 
-    const landing = (<div className="landing-page">
-      <div style={{ padding: "40px" }}>
-        Convert JPEG or PNG images to PDF without uploading your sensitve data anywhere.
+const landing = (
+  <div className="landing-page">
+    <div style={{ padding: "40px", fontSize: "18px", textAlign: "center" }}>
+      Convert JPEG or PNG to PDF — <strong>Safe, Secure, Local.</strong>  
       <br />
-      Files are processed entirely on your device and does not get uploaded to any server.
-      </div>
-      <button onClick={() => this.fileInput.current.click()} className="big-btn">Select Images</button>
-      <div className="dropzone"
-        onDragStart={(e) => {
-        }}
-        onDrop={(e) => {
-          if (e.stopPropagation) {
-            e.stopPropagation(); // stops the browser from redirecting.
-          }
-          if (e.preventDefault) {
-            e.preventDefault(); // stops the browser from redirecting.
-          }
-          let files = e.dataTransfer.files;
-          this.readfiles(files);
-        }}
-        onDragOver={(e) => {
-          if (e.preventDefault) {
-            e.preventDefault(); // stops the browser from redirecting.
-          }
-        }}
-        onDragEnter={(e) => { e.preventDefault(); }}>or drop images here</div>
-    </div>);
+      Your files never leave your device.
+    </div>
+    <button 
+      onClick={() => this.fileInput.current.click()} 
+      className="big-btn"
+      style={{ marginTop: "20px", padding: "15px 30px", fontSize: "18px", cursor: "pointer" }}
+    >
+      Select Images
+    </button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div
+  className="dropzone"
+  style={{
+    margin: "25px auto",
+    padding: "60px 20px",
+    width: "80%",
+    maxWidth: "600px",
+    border: "3px dashed #888",
+    borderRadius: "12px",
+    backgroundColor: "#f9f9f9",
+    color: "#555",
+    fontSize: "20px",
+    fontWeight: "500",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+    transition: "0.3s",
+    cursor: "pointer",
+    textAlign: "center"
+  }}
+  onDragOver={(e) => {
+    e.preventDefault(); // allow drop
+    e.currentTarget.style.backgroundColor = "#e0f7ff";
+    e.currentTarget.style.borderColor = "#00aaff";
+  }}
+  onDragLeave={(e) => {
+    e.currentTarget.style.backgroundColor = "#f9f9f9";
+    e.currentTarget.style.borderColor = "#888";
+  }}
+  onDrop={(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    let files = e.dataTransfer.files;
+    this.readfiles(files); // your class method
+    e.currentTarget.style.backgroundColor = "#f9f9f9";
+    e.currentTarget.style.borderColor = "#888";
+  }}
+  onClick={() => this.fileInput.current.click()} // click to open file selector
+>
+  <div>Drag & Drop Images Here</div>
+  <small style={{ marginTop: "10px", fontSize: "14px", color: "#999" }}>
+    or click to select files
+  </small>
+</div>
+<input
+  type="file"
+  multiple
+  ref={this.fileInput}
+  style={{ display: "none" }}
+  onChange={(e) => this.readfiles(e.target.files)}
+/>
+
+    </div>
+
+
+    );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     const listView = (<div style={{ display: 'flex', flexWrap: 'wrap', flex: "1", justifyContent: "center" }} >
       {this.state.images.map((img, index) => (
@@ -147,7 +229,7 @@ class App extends React.Component {
           flex: "1", height: "50px", display: "flex", flexDirection: "column",
           justifyContent: "center", textAlign: "center",
           background: (this.state.pageMargin === None ? "purple" : "rgb(240,240,240)"),
-          color: (this.state.pageMargin ===None ? "white" : "black"), padding: "5px"
+          color: (this.state.pageMargin === None ? "white" : "black"), padding: "5px"
         }} onClick={() => this.setState({ pageMargin: None })}>None</div>
         <div style={{
           flex: "1", height: "50px", display: "flex", flexDirection: "column",
@@ -277,13 +359,10 @@ class App extends React.Component {
       <button onClick={this.createPdf} className="button">Generate PDF</button>
     </div>);
 
-    const pageHeader = (<div className="page-header">
-      <span>CONVERT IMAGE TO PDF</span>
-    </div>);
 
     if (this.state.images.length < 1) {
       return <div>
-        {pageHeader}
+
         <input type="file" ref={this.fileInput} onChange={() => this.readfiles(this.fileInput.current.files)} multiple style={{ display: "none" }}></input>
         {landing}
       </div>
@@ -296,7 +375,7 @@ class App extends React.Component {
 
     return (
       <div style={{ display: "flex", flexDirection: "column", width: "100%", height: "100%", overflow: "hidden", flex: "1" }}>
-        {pageHeader}
+
         <div style={{ display: "flex", overflow: "hidden", flex: "1" }}>
           <div style={{ display: "flex", flexDirection: "column", width: "100%", flex: "1", overflow: "auto", background: "rgb(240,240,240)" }} onClick={this.clearSelection}>
             {listView}
@@ -490,14 +569,14 @@ class App extends React.Component {
           pageSize = [img.width, img.height];
         } else {
           switch (jpegOrientation) {
-  case 6:
-  case 8:
-    pageSize = [pageSize[1], pageSize[0]];
-    break;
-  default:
-    // do nothing for other orientations
-    break;
-}
+            case 6:
+            case 8:
+              pageSize = [pageSize[1], pageSize[0]];
+              break;
+            default:
+              // do nothing for other orientations
+              break;
+          }
 
         }
         const page = pdfDoc.addPage(pageSize);
@@ -527,20 +606,20 @@ class App extends React.Component {
             height: dim.height,
           });
         }
-switch (jpegOrientation) {
-  case 6:
-    page.setRotation(degrees(90));
-    break;
-  case 3:
-    page.setRotation(degrees(180));
-    break;
-  case 8:
-    page.setRotation(degrees(270));
-    break;
-  default:
-    // do nothing for other orientations
-    break;
-}
+        switch (jpegOrientation) {
+          case 6:
+            page.setRotation(degrees(90));
+            break;
+          case 3:
+            page.setRotation(degrees(180));
+            break;
+          case 8:
+            page.setRotation(degrees(270));
+            break;
+          default:
+            // do nothing for other orientations
+            break;
+        }
 
       }
       const pdfBytes = await pdfDoc.save();
@@ -693,9 +772,9 @@ switch (jpegOrientation) {
 
   uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-     let r = Math.floor(Math.random() * 16);
+      let r = Math.floor(Math.random() * 16);
       let v = c === 'x' ? r : ((r & 0x3) | 0x8);
-        return v.toString(16);
+      return v.toString(16);
     });
   }
 
